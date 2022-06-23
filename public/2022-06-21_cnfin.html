@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0">
+<link rel="shortcut icon" type="image/png" href="/media/1-MdAvatar_small.png">
+<title>Transfinite Induction using Cantor&#39;s Normal Form up to ε0</title>
+<style>
+body {
+ max-width: 650px; margin: 40px auto; padding: 0 10px;
+ font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+   "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+   "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+ color: #222; background: #eee;
+}
+h1, h2, h3 { line-height: 1.2; }
+h1 { border-bottom: 2px solid #000; }
+h2 { border-bottom: 1px solid #000; }
+h3 { border-bottom: 1px solid #999; }
+hr { border: 1px solid #000; }
+hr.small { border-color: #999; }
+ul { padding-left: 24px; }
+pre, code.incode { white-space: pre-wrap; border: 1px solid #000; background: #fff }
+code.innercode { white-space: pre-wrap; border: 1px solid #000; background: #fff }
+a.anchor { text-decoration: none; font-size: 0.4em; }
+a.internal { text-decoration: none; }
+a.internal:hover { text-decoration: underline; }
+.cref:target { background: #ffa; }
+p.cite:target { border: 2px solid #000; }
+#toc_container {
+ display: table; padding: 0 24px 0 8px;
+ background: #ddd; border: 1px solid #777;
+}
+#toc_container ul { list-style-type: disc; list-style-position: inside; }
+@media (prefers-color-scheme: dark) {
+ body { color: #eee; background: #444; }
+ a:link { color: #7bf; }
+ a:visited { color: #ccf; }
+ h1 { border-bottom-color: #ccc; }
+ h2 { border-bottom-color: #ccc; }
+ h3 { border-bottom-color: #666; }
+ hr { border-color: #ccc; }
+ hr.small { border-color: #666; }
+ pre { background: #555; }
+ #toc_container { background: #555; border-color: #ccc; }
+}
+</style>
+</head>
+<body>
+<h1 id="top">Transfinite Induction using Cantor&#39;s Normal Form up to ε0 <a href="#top" class="anchor">🔗</a></h1>
+<h2 id="about_this_post">About This Post <a href="#about_this_post" class="anchor">🔗</a></h2>
+<p>I&#39;m trying to understand better why having the ability to do transfinite induction up to the ordinal ε0 &#40;epsilon zero&#41; implies that Peano Arithmetic is consistent, as stated by <a href="https://en.wikipedia.org/wiki/Gentzen%27s_consistency_proof" title="Gentzen&#39;s consistency proof &#40;Wikipedia&#41;">Gentzen&#39;s Consistency Proof &#40;Wikipedia&#41;</a>.</p>
+<p>The first thing I&#39;m investigating is why you can&#39;t do transfinite induction up to ε0, since it&#39;s not clear to me why you can&#39;t. So I&#39;m defining the ordinals up to ε0 in <a href="http://us.metamath.org/" title="Metamath">Metamath</a> using Cantor&#39;s Normal Form, and trying to apply transfinite induction up to ε0 without using the Axiom of Infinity, so that I can see where I fail.</p>
+<p>In this post, I&#39;m including somewhat basic explanations of <a href="#ordinal_numbers" title="Ordinal Numbers" class="internal">Ordinal Numbers</a>, <a href="#cantors_normal_form" title="Cantor&#39;s Normal Form" class="internal">Cantor&#39;s Normal Form</a>, and <a href="#transfinite_induction" title="Transfinite Induction" class="internal">Transfinite Induction</a>. But even though I&#39;m calling the explanations &quot;basic&quot;, they&#39;re probably still hard to understand for anyone who doesn&#39;t already know them, because it&#39;s a lot to take in and I don&#39;t have much experience explaining math &#40;this is just the first post!&#41;.</p>
+<p>You can easily skip these sections if you already know them and are only interested in the <a href="#metamath_definitions" title="Metamath Definitions" class="internal">Metamath definitions</a> that I&#39;ve made.</p>
+<h2 id="ordinal_numbers"><a href="https://en.wikipedia.org/wiki/Ordinal_number" title="Ordinal Numbers &#40;Wikipedia&#41;">Ordinal Numbers</a> <a href="#ordinal_numbers" class="anchor">🔗</a></h2>
+<p>To define the ordinal numbers, we can start with the sequence of natural numbers, like this:</p>
+<pre>
+0, 1, 2, 3, ...
+</pre>
+<p>Then we include a new number which is greater than all of the natural numbers. Usually this number is written using the greek letter ω &#40;omega&#41;. And we also include a successor for &quot;ω&quot;, which we can write as &quot;ω+1&quot;. And then a successor for &quot;ω+1&quot; written as &quot;ω+2&quot;, and so on.</p>
+<pre>
+0, 1, 2, 3, ...
+ω, ω+1, ω+2, ω+3, ...
+</pre>
+<p>Then we can add another number, which  I&#39;ll write &quot;ω2&quot; &#40;which means &quot;ω times 2&quot;&#41;, which is greater than every ω+n, and start again. So now we have:</p>
+<pre>
+0, 1, 2, 3, ...
+ω, ω+1, ω+2, ω+3, ...
+ω2, ω2+1, ω2+2, ω2+3 , ...
+</pre>
+<p>You can probably see where this is going, we have an infinite sequence of infnite sequences, so we&#39;d have a ω3, a ω4, ...</p>
+<p>But then we can go farther, and add another number even larger than each ωn. We&#39;ll call it &quot;ωω&quot;, or &quot;ω times ω&quot;, or &quot;ω^2&quot;. And then we&#39;ve got another infinite stack of infinite stacks of infinite stacks.</p>
+<p>And we can just keep going like this forever, and these are the ordinal numbers.</p>
+<p>You can also see it as a bunch of limits:</p>
+<pre>
+0, 1, 2, 3, ... ~~~~~~~&gt; ω
+ω, ω+1, ω+2, ω+3, ... ~&gt; ω + ω = ω2
+ω, ω2, ω3, ... ~~~~~~~~&gt; ωω = ω^2
+ω, ω^2, ω^3, ... ~~~~~~&gt; ω^ω
+</pre>
+<h2 id="cantors_normal_form"><a href="https://en.wikipedia.org/wiki/Ordinal_arithmetic#Cantor_normal_form" title="Cantor normal form &#40;Wikipedia&#41;">Cantor&#39;s Normal Form</a> <a href="#cantors_normal_form" class="anchor">🔗</a></h2>
+<p>Cantor&#39;s Normal Form &#40;CNF&#41; is a way to write down ordinal numbers. We can define all the ordinals up to ε0 recursively using CNF.</p>
+<p>First, we start by writing the natural numbers in the usual way. So we have 0, 1, 2, 3, ... as themselves in CNF. Then we say that for any ordinal number <code class="innercode">α &gt; 0</code> written in CNF, <code class="innercode">ω^α</code> is also an ordinal number in CNF. And given any two ordinals α and β written in CNF, <code class="innercode">α + β</code> is also an ordinal number in CNF. Here are examples of ordinals written in CNF form:</p>
+<pre>
+0    |   1   |     10           |  1000
+ω^1  |  ω^2  |  ω^2 + ω^1 + 10  |  ω^&#40;ω^2 + ω^1 + 10&#41; + ω^1
+
+ω^2 + ω^2 + ω^2 = &#40;ω^2&#41; × 3
+ω^&#40;ω^&#40;ω^&#40;ω^&#40;ω^ω&#41;&#41;&#41;&#41;
+</pre>
+<p>In the usual CNF form, we always want to simplify ordinals like <code class="innercode">ω^2 + ω^2 + ω^2</code> to <code class="innercode">ω^2×3</code>. By doing that, the CNF becomes unique for each ordinal number.</p>
+<p>This gives us a way to write any ordinal number which is less than ε0. And since this is all just strings of symbols, it means we can encode any ordinal less than ε0 in a completely finite way using just the symbols &quot;ω&quot;, &quot;^&quot;, &quot;+&quot;, parentheses, and &quot;0&quot; to &quot;9&quot;.</p>
+<h2 id="transfinite_induction"><a href="https://en.wikipedia.org/wiki/Transfinite_induction" title="Transfinite Induction &#40;Wikipedia&#41;">Transfinite Induction</a> <a href="#transfinite_induction" class="anchor">🔗</a></h2>
+<p>Induction is usually defined on just the natural numbers, and works like this: &quot;If A is true when x = 0, and if A being true for every x &lt; n implies that A must be true for n, then A must be true for every natural number&quot;.</p>
+<p>Transfinite induction just extends this to all ordinals. &quot;If A is true when x = 0, and if A being true for every x &lt; α then A must be true for α, then A is true for every ordinal number&quot;.</p>
+<p>When proving transfinite induction, you&#39;ll usually have to prove three separate cases.</p>
+<ul>
+<li>First, the base case, when x = 0.</li>
+<li>Second, when it&#39;s true for x, it must be true for x + 1.</li>
+<li>Finally, there is the case at ordinal numbers like ω, which don&#39;t have a predecessor. In this case we have to show that if it&#39;s true for 0, 1, 2, 3, ..., up to a limit ordinal α, then it must be true for α as well.</li>
+<p>Using ZFC with the Axiom of Infinity, we can prove that if all of these cases apply, then it&#39;s true for all ordinals. In Peano Arithmetic &#40;PA&#41; or ZFC without the Axiom of Infinity, if you take any ordinal less than ε0, you can write a proof that transfinite induction applies up to that ordinal. Note, however, that PA is not strong enough to generalize this: though it can prove it for any individual ordinal &lt; ε0, it cannot prove the statement &quot;for all ordinals &lt; ε0, transfinite induction applies&quot;.</p>
+<h2 id="metamath_definitions">Metamath Definitions <a href="#metamath_definitions" class="anchor">🔗</a></h2>
+<h3 id="encoding_cantors_normal_form">Encoding Cantor&#39;s Normal Form <a href="#encoding_cantors_normal_form" class="anchor">🔗</a></h3>
+<p>Since Cantor Normal Form is <code class="innercode">ω^&#40;α_1&#41;×c_1 + ω^&#40;α_2&#41;×c_2 + ... + ω^&#40;α_n&#41;×c_n</code>, we can encode this without any loss of information as a function F from the ordinals α onto the constants c, where the constants c are non-zero natural numbers. With this encoding, zero is the empty set, 1 is a function mapping 0 &#40;the ordinal&#41; onto 1 &#40;the natural number&#41;, ω is a function mapping 1 onto 1, <code class="innercode">ω×2 + 1</code> is the function mapping 1 onto 2 and 0 onto 1, etc.</p>
+<p>We can also define addition on these ordinals simply by adding up all the c_n. For example <code class="innercode">&#40;ω+1&#41; + &#40;ω^2+ω&#41;</code> gives <code class="innercode">ω^2 + ω×2 + 1</code>. Note that this definition is not the same as the usual definition of addition on ordinals, but it will work just fine for this construction.</p>
+<p>Below is the actual definition I&#39;m using for addition.</p>
+<pre>
+<code class="mm">.+ = &#40; y e. _V , z e. _V |-&gt; &#40; n e. &#40; dom y u. dom z &#41;</code>
+<code class="mm">                     |-&gt; &#40; &#40; y ` n &#41; +o &#40; z ` n &#41; &#41; &#41; &#41;</code>
+</pre>
+<p><code class="innercode">.+</code> is our new addition operator. It is defined to be equal to a function taking two arguments <code class="innercode">y</code> and <code class="innercode">z</code>, which can be any set. However, even though we allow any set, the definition only gives valid results when they are ordinal numbers in the CNF form I explained above. The reason we allow any set is because it would be cricular to require the arguments to be CNF ordinal numbers, because we&#39;ll need to use this operator to define them in the first place.</p>
+<p>The function returns the sum, which is just another function, this one mapping each ordinal <code class="innercode">n</code> in the domains of <code class="innercode">y</code> and <code class="innercode">z</code> onto the sum of the values of <code class="innercode">y</code> and <code class="innercode">z</code> at <code class="innercode">n</code>.</p>
+<h3 id="constructing_class_of_ordinals">Constructing the class of ordinals &lt; ε0 <a href="#constructing_class_of_ordinals" class="anchor">🔗</a></h3>
+<p>To define the ordinal numbers less than ε0 in the above form, we need to use a recursive definition. Because we&#39;re not using the Axiom of Infinity, each step of the recursion is only allowed to have finitely many elements.</p>
+<p>At the first step, we include just 0 and 1. After that, each step inserts ω^α for each α in the previous step, and α + β for each α and β in the previous step. That should be enough to get everything, since it gives every natural number, every sum of ordinals, and ω to the power of each ordinal.</p>
+<p>Here are the actual Metamath statements I&#39;m using:</p>
+<pre>
+<code class="mm">|- I = { &lt;. &#40;/&#41; , 1o &gt;. }</code>
+</pre>
+<pre>
+<code class="mm">|- &#40; ph &lt;-&gt; E. y e. c &#40; x = { &lt;. y , 1o &gt;. }</code>
+<code class="mm">                     \/ E. z e. c x = &#40; y .+ z &#41; &#41; &#41;</code>
+</pre>
+<pre>
+<code class="mm">|- C = U. &#40; rec &#40; &#40; c e. _V |-&gt;</code>
+<code class="mm">     { x | &#40; x e. c \/ ph &#41; } &#41; , { &#40;/&#41; , I } &#41; |` _om &#41;</code>
+</pre>
+<p><code class="innercode">I</code> is used as a variable equal to 1 in CNF form.</p>
+<p><code class="innercode">ph</code> is the formula that says what new sets to include at each step. Inside <code class="innercode">ph</code>, <code class="innercode">c</code> represents the previous step, and <code class="innercode">x</code> represents the new value to be added. We can see that we only add <code class="innercode">x</code> if it&#39;s equal to <code class="innercode">ω^y</code> for some <code class="innercode">y</code> in the previous step, or if it&#39;s equal to <code class="innercode">y+z</code> for a <code class="innercode">y</code> and a <code class="innercode">z</code> in the previous step.</p>
+<p>Finally, there is <code class="innercode">C</code>, which uses Metamath&#39;s recursive definition generator to put it all together.</p>
+<h3 id="constructing_less_than_relation">Constructing the &lt; relation on the class of ordinals <a href="#constructing_less_than_relation" class="anchor">🔗</a></h3>
+<p>The &lt; relation also needs to be defined recursively in a finite way. <code class="innercode">0 &lt; 1</code> works for our base case. At each step, we do 3 things.</p>
+<ul>
+<li>Rule <code class="innercode">ps</code>. If <code class="innercode">x &lt; z</code> and <code class="innercode">z &lt; y</code> are both in the previous step, then we include <code class="innercode">x &lt; y</code> in the new step. This assures us that the final relation will be transitive.</li>
+<li>Rule <code class="innercode">ch</code>. If <code class="innercode">x</code> is an ordinal from a previous step and <code class="innercode">a &lt; b</code> is in the previous step, then we add <code class="innercode">x &lt; x + b</code> to the next step. Note that <code class="innercode">b</code> cannot be zero in this case &#40;because nothing is less than zero&#41;.</li>
+<li>Rule <code class="innercode">th</code>. If <code class="innercode">a &lt; b</code> is in the previous step, then we add <code class="innercode">ω^a &lt; ω^b</code> in the next step. This completes the rest of the relation.</li>
+<p>Rules <code class="innercode">ps</code> and <code class="innercode">ch</code> combined give us most of the required relation, because using them we can compare any two natural numbers, and we can compare <code class="innercode">&#40;ω^α&#41;×c_1</code> with <code class="innercode">&#40;ω^α&#41;×c_2</code> for any ordinal <code class="innercode">α</code> and natural numbers <code class="innercode">c_1</code> and <code class="innercode">c_2</code>. However, it doesn&#39;t allow us to compare <code class="innercode">ω^α</code> with <code class="innercode">ω^β</code> if <code class="innercode">α =/= β</code>, which is why rule <code class="innercode">th</code> is necessary.</p>
+<p>Here are the Metamath definitions of the above rules:</p>
+<pre>
+<code class="mm">|- &#40; ps &lt;-&gt; E. z &#40; &lt;. x , z &gt;. e. c /\</code>
+<code class="mm">                   &lt;. z , y &gt;. e. c &#41; &#41;</code>
+</pre>
+<pre>
+<code class="mm">|- &#40; ch &lt;-&gt; &#40; x e. &#40; dom c u. ran c &#41; /\</code>
+<code class="mm">   E. a E. b &#40; &lt;. a , b &gt;. e. c /\ y = &#40; x .+ b &#41; &#41; &#41; &#41;</code>
+</pre>
+<pre>
+<code class="mm">|- &#40; th &lt;-&gt; E. a E. b &#40; &lt;. a , b &gt;. e. c /\</code>
+<code class="mm">   &#40; x = { &lt;. a , 1o &gt;. } /\ y = { &lt;. b , 1o &gt;. } &#41; &#41; &#41;</code>
+</pre>
+<p>And then finally putting them together into a recursive definition:</p>
+<pre>
+<code class="mm">|- Y = { &lt;. x , y &gt;. | &#40; &lt;. x , y &gt;. e. c \/</code>
+<code class="mm">                &#40; ps \/ &#40; ch \/ th &#41; &#41; &#41; }</code>
+</pre>
+<pre>
+<code class="mm">|- .&lt; = U. &#40; rec &#40; &#40; c e. _V |-&gt; Y &#41; ,</code>
+<code class="mm">     { &lt;. &#40;/&#41; , I &gt;. } &#41; |` _om &#41;</code>
+</pre>
+<h3 id="conclusion">Conclusion <a href="#conclusion" class="anchor">🔗</a></h3>
+<p>And that&#39;s it! We have the definitions, what remains is actually using them to prove things. That will hopefully be the topic for next time.</p>
+<h1 id="meta">Meta <a href="#meta" class="anchor">🔗</a></h1>
+<a href="/index.html"class="internal">Home Page</a>
+<p>Date: 2022-06-21</p>
+<p>Author: Md</p>
+<p>Tags: math | mathematics | ordinal_numbers | ordinals</p>
+<p>Tags: ordinal | cnf | cantors_normal_form</p>
+<p>Tags: cantor_normal_form | epsilon_nought | epsilon_zero</p>
+<p>Tags: transfinite_induction | transfinite | infinite</p>
+<p>Tag: metamath</p>
+</body>
+</html>
