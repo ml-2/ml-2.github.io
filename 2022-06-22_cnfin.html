@@ -41,8 +41,7 @@ p.cite:target { border: 2px solid #000; }
  h3 { border-bottom-color: #666; }
  hr { border-color: #ccc; }
  hr.small { border-color: #666; }
- pre { background: #555; }
- code.innercode { background: #555; }
+ pre, code.innercode { background: #555; }
  #toc_container { background: #555; border-color: #ccc; }
 }
 </style>
@@ -98,6 +97,7 @@ p.cite:target { border: 2px solid #000; }
 <li>First, the base case, when x = 0.</li>
 <li>Second, when it&#39;s true for x, it must be true for x + 1.</li>
 <li>Finally, there is the case at ordinal numbers like ω, which don&#39;t have a predecessor. In this case we have to show that if it&#39;s true for 0, 1, 2, 3, ..., up to a limit ordinal α, then it must be true for α as well.</li>
+</ul>
 <p>Using ZFC with the Axiom of Infinity, we can prove that if all of these cases apply, then it&#39;s true for all ordinals. In Peano Arithmetic &#40;PA&#41; or ZFC without the Axiom of Infinity, if you take any ordinal less than ε0, you can write a proof that transfinite induction applies up to that ordinal. Note, however, that PA is not strong enough to generalize this: though it can prove it for any individual ordinal &lt; ε0, it cannot prove the statement &quot;for all ordinals &lt; ε0, transfinite induction applies&quot;.</p>
 <h2 id="metamath_definitions">Metamath Definitions <a href="#metamath_definitions" class="anchor">🔗</a></h2>
 <h3 id="encoding_cantors_normal_form">Encoding Cantor&#39;s Normal Form <a href="#encoding_cantors_normal_form" class="anchor">🔗</a></h3>
@@ -134,6 +134,7 @@ p.cite:target { border: 2px solid #000; }
 <li>Rule <code class="innercode">ps</code>. If <code class="innercode">x &lt; z</code> and <code class="innercode">z &lt; y</code> are both in the previous step, then we include <code class="innercode">x &lt; y</code> in the new step. This assures us that the final relation will be transitive.</li>
 <li>Rule <code class="innercode">ch</code>. If <code class="innercode">x</code> is an ordinal from a previous step and <code class="innercode">a &lt; b</code> is in the previous step, then we add <code class="innercode">x &lt; x + b</code> to the next step. Note that <code class="innercode">b</code> cannot be zero in this case &#40;because nothing is less than zero&#41;.</li>
 <li>Rule <code class="innercode">th</code>. If <code class="innercode">a &lt; b</code> is in the previous step, then we add <code class="innercode">ω^a &lt; ω^b</code> in the next step. This completes the rest of the relation.</li>
+</ul>
 <p>Rules <code class="innercode">ps</code> and <code class="innercode">ch</code> combined give us most of the required relation, because using them we can compare any two natural numbers, and we can compare <code class="innercode">&#40;ω^α&#41;×c_1</code> with <code class="innercode">&#40;ω^α&#41;×c_2</code> for any ordinal <code class="innercode">α</code> and natural numbers <code class="innercode">c_1</code> and <code class="innercode">c_2</code>. However, it doesn&#39;t allow us to compare <code class="innercode">ω^α</code> with <code class="innercode">ω^β</code> if <code class="innercode">α =/= β</code>, which is why rule <code class="innercode">th</code> is necessary.</p>
 <p>Here are the Metamath definitions of the above rules:</p>
 <pre>
