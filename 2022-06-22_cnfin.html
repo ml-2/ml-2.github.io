@@ -42,6 +42,7 @@ p.cite:target { border: 2px solid #000; }
  hr { border-color: #ccc; }
  hr.small { border-color: #666; }
  pre { background: #555; }
+ code.innercode { background: #555; }
  #toc_container { background: #555; border-color: #ccc; }
 }
 </style>
@@ -83,11 +84,9 @@ p.cite:target { border: 2px solid #000; }
 <p>Cantor&#39;s Normal Form &#40;CNF&#41; is a way to write down ordinal numbers. We can define all the ordinals up to ε0 recursively using CNF.</p>
 <p>First, we start by writing the natural numbers in the usual way. So we have 0, 1, 2, 3, ... as themselves in CNF. Then we say that for any ordinal number <code class="innercode">α &gt; 0</code> written in CNF, <code class="innercode">ω^α</code> is also an ordinal number in CNF. And given any two ordinals α and β written in CNF, <code class="innercode">α + β</code> is also an ordinal number in CNF. Here are examples of ordinals written in CNF form:</p>
 <pre>
-0    |   1   |     10           |  1000
-ω^1  |  ω^2  |  ω^2 + ω^1 + 10  |  ω^&#40;ω^2 + ω^1 + 10&#41; + ω^1
-
-ω^2 + ω^2 + ω^2 = &#40;ω^2&#41; × 3
-ω^&#40;ω^&#40;ω^&#40;ω^&#40;ω^ω&#41;&#41;&#41;&#41;
+0, 1, 10, 1000, ω^1, ω^2, ω^2 + ω^1 + 10,
+  ω^&#40;ω^2 + ω^1 + 10&#41; + ω^1, ω^2 + ω^2 + ω^2 = &#40;ω^2&#41; × 3,
+  ω^&#40;ω^&#40;ω^&#40;ω^&#40;ω^ω&#41;&#41;&#41;&#41;
 </pre>
 <p>In the usual CNF form, we always want to simplify ordinals like <code class="innercode">ω^2 + ω^2 + ω^2</code> to <code class="innercode">ω^2×3</code>. By doing that, the CNF becomes unique for each ordinal number.</p>
 <p>This gives us a way to write any ordinal number which is less than ε0. And since this is all just strings of symbols, it means we can encode any ordinal less than ε0 in a completely finite way using just the symbols &quot;ω&quot;, &quot;^&quot;, &quot;+&quot;, parentheses, and &quot;0&quot; to &quot;9&quot;.</p>
